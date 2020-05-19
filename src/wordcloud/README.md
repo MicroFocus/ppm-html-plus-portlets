@@ -1,0 +1,1 @@
+you need jquery.min.js

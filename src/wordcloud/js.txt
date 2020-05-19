@@ -1,0 +1,58 @@
+let allWords = [];
+
+data.forEach(function(d) {
+  var name = d[0];
+  var value = d[1];
+  var node = {"name": name, "value": value};
+
+  allWords.push(node);
+
+});
+
+function makecloud(words) {
+debugger;
+  var a = d3.select(container).append("svg");
+  var color_scale = d3.scaleSequential(d3.interpolateSpectral);
+  
+  var layout = d3.layout.cloud()
+    .size([1500, 1500])
+    .words(words)
+    .padding(3)
+    .rotate(d => ~~(Math.random() * 1) * 90)
+    .font("Impact")
+    .fontSize(d => 8*Math.log(d.size))
+    .on("end", draw);
+
+  layout.start();
+
+  function draw(words) {
+    d3.select(container).select("svg")
+      .attr("width", layout.size()[0])
+      .attr("height", layout.size()[1])
+      .append("g")
+      .attr(
+        "transform",
+        "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")"
+      )
+      .selectAll("text")
+      .data(words)
+      .enter()
+      .append("text")
+      .style("font-size", d => `${d.size}px`)
+      .style("font-family", "Impact")
+      .attr("text-anchor", "middle")
+      .attr("transform", d => `translate(${[d.x, d.y]})rotate(${d.rotate})`)
+      .attr("fill", d => color_scale(Math.log(d.fill)/9))
+      .text(d => d.text);
+  }
+
+  return d3.select(container).select("svg");
+}
+
+
+makecloud(
+  allWords.map(d => ({text: d.name,
+   size: d.value,
+   fill: d.value,
+  })))
+
