@@ -12,6 +12,9 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/radial%20tree/radialtree.PNG">
 
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/zoomable%20sunburst">Zoomable Sunburst</a>
+
+<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/zoomable%20sunburst/zoomablesunburst.PNG">
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/htmlplus.PNG">
 
