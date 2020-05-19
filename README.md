@@ -16,7 +16,9 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/zoomable%20sunburst/zoomablesunburst.PNG">
 
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/video">Video</a>
 
+<img src="src/video/video.PNG">
 
 Questions contact:etienne.canaud@microfocus.com;christopher.hangl@microfocus.com
 
