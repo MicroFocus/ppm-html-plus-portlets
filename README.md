@@ -4,17 +4,17 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/collapsible%20tree">Collapsible Tree</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/collapsible%20tree/CollapsibleTree.PNG">
+<img src="src/collapsible%20tree/CollapsibleTree.PNG">
 
 
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/radial%20tree">Radial Tree</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/radial%20tree/radialtree.PNG">
+<img src="src/radial%20tree/radialtree.PNG">
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/zoomable%20sunburst">Zoomable Sunburst</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/zoomable%20sunburst/zoomablesunburst.PNG">
+<img src="src/zoomable%20sunburst/zoomablesunburst.PNG">
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/video">Video</a>
 
