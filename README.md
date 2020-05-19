@@ -15,3 +15,33 @@ or Windows: com.kintana.core.server.JVM_OPTIONS=-Dserver.mode=DEVELOPMENT
 <b>Admin Console’s Feature Toggles for HTML+</b>
 To use the HTML+ Portlets you must have the feature toggle on.  Moreover, to use multiple Dashboard Datasources in HTML+ Portlets you must have it on.
  
+<b>Download D3js</b>
+<a href="https://d3js.org/">d3js</a>
+ Place on the server in for example 
+/itg/web/knta/test/js/lib/d3.js
+
+For d3.js, you might mention the version numbers are important. Current major version is v5 – but you can still find lots of example online that are built against earlier versions, such as v3. There are changes in APIs which means examples will likely need some changes before it works – so you should watch out for d3 version if you use some existing code.
+
+<b>Example Visualizations</b>
+We used many observable examples and converted them to function in PPM.  We cannot run Observable runtime, in PPM or utilize any of their worksheet implementations.
+https://observablehq.com/@d3/gallery
+
+<b>PPM Interactive REST API Help</b>
+The below link shows the url to access the various API and results.
+https://admhelp.microfocus.com/ppm/en/9.50-9.55/Help/Content/RG/WebSvcsREST/Interactive-API-Help.htm?Highlight=Rest
+
+<b>How to attach to container and SVG</b>
+
+code like the below :
+const svg = d3.create("svg")
+      .attr("viewBox", [0, 0, width, height]);
+	whould translate to :
+const svg = d3.select(container).append("svg")
+.attr("viewBox", [0, 0, width, height]);	
+
+
+Basically, we select the container and insert there.  This JavaScript code will be inserted as the body of a function that will receive the following parameters:
+
+container: The root <div> element of the portlet when the CSS, HTML and JavaScript code will be inserted
+
+
