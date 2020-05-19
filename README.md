@@ -57,12 +57,10 @@ const svg = d3.select(container).append("svg")<br>
 .attr("viewBox", [0, 0, width, height]);<br>	
 
 
-Basically, we select the container and insert there.  This JavaScript code will be inserted as the body of a function that will receive the following parameters:
-
-container: The root <div> element of the portlet when the CSS, HTML and JavaScript code will be inserted
+Basically, we select the container and insert there.  This JavaScript code will be inserted as the body of a function that will receive the following parameters: container: The root <div> element of the portlet when the CSS, HTML and JavaScript code will be inserted
 
 
-<b>How to access multiple Datasources<b>
+<b>How to access multiple Datasources</b>
 Get data from default datasource but with different Filters:<br>
 let customFilter = {"PROGRAM_NAME": [{"id":30120}]};<br>
 dataProvider.getData(customFilter, function(data) {<br>
