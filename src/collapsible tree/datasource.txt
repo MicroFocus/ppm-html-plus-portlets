@@ -1,0 +1,3 @@
+SELECT ENTITY_ID ENTITY_ID, NAME NAME, PARENT_PORTFOLIO_ID PARENT_PORTFOLIO_ID, ENTITY_TYPE ENTITY_TYPE
+FROM ( select PORTFOLIO_ID ENTITY_ID, NAME, parent_portfolio_id PARENT_PORTFOLIO_ID, 'PORTFOLIO' ENTITY_TYPE from pfm_portfolios UNION select request_id, asset_name, asset_portfolio_id, 'ASSET' from kcrt_fg_pfm_asset where asset_portfolio_id is not null UNION select request_id, proposal_name, prop_portfolio_id, 'PROPOSAL' from kcrt_fg_pfm_proposal where prop_portfolio_id is not null UNION select request_id, project_name, prj_portfolio_id, 'PROJECT' from kcrt_fg_pfm_project where prj_portfolio_id is not null)
+ WHERE 1=1
