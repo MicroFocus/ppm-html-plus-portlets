@@ -1,22 +1,27 @@
 # ppm-html-plus-portlets
 Public Github Repo hosting Micro Focus PPM Guide and Sample code for HTML+ portlets
-Portlets for use with Microfocus PPM.  The base code used to build these examples can be found https://observablehq.com/@d3/gallery.
+Portlets for use with Microfocus PPM.  Most of the base code used to build these examples, can be found https://observablehq.com/@d3/gallery.
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/collapsible%20tree">Collapsible Tree</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/collapsible%20tree/CollapsibleTree.PNG">
+<img src="src/collapsible%20tree/CollapsibleTree.PNG">
 
 
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/radial%20tree">Radial Tree</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/radial%20tree/radialtree.PNG">
+<img src="src/radial%20tree/radialtree.PNG">
 
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/zoomable%20sunburst">Zoomable Sunburst</a>
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/zoomable%20sunburst/zoomablesunburst.PNG">
+<img src="src/zoomable%20sunburst/zoomablesunburst.PNG">
 
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/video">Video</a>
 
+<img src="src/video/video.PNG">
+
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/wordcloud">Word Cloud</a>
+<img src="src/wordcloud/wordcloud.PNG">
 
 Questions contact:etienne.canaud@microfocus.com;christopher.hangl@microfocus.com
 
