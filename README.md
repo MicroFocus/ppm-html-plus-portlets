@@ -4,7 +4,8 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/collapsible%20tree/CollapsibleTree.PNG">
 
-<a href=https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/collapsible%20tree">Collapsible Tree</a>
+
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/collapsible%20tree">Collapsible Tree</a>
 
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/htmlplus.PNG">
