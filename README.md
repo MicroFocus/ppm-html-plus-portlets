@@ -49,12 +49,12 @@ https://admhelp.microfocus.com/ppm/en/9.50-9.55/Help/Content/RG/WebSvcsREST/Inte
 
 <b>How to attach to container and SVG</b>
 
-code like the below :
-const svg = d3.create("svg")
-      .attr("viewBox", [0, 0, width, height]);
-	whould translate to :
-const svg = d3.select(container).append("svg")
-.attr("viewBox", [0, 0, width, height]);	
+code like the below :<br>
+const svg = d3.create("svg")<br>
+      .attr("viewBox", [0, 0, width, height]);<br>
+	whould translate to :<br>
+const svg = d3.select(container).append("svg")<br>
+.attr("viewBox", [0, 0, width, height]);<br>	
 
 
 Basically, we select the container and insert there.  This JavaScript code will be inserted as the body of a function that will receive the following parameters:
@@ -70,13 +70,14 @@ dataProvider.getData(customFilter, function(data) {<br>
   console.log('Default Datasource with modified filters:');<br>
   console.log(DF.HtmlPlusUtils.utils.indexDataByColumnKey(data.data, data.columnsInfo));<br>
 });<br>
+	<br>
 Note the new built-in method DF.HtmlPlusUtils.utils.indexDataByColumnKey(data, columnsInfo)which will turn the data from the “raw” datasource format (Array of Array of String or numbers) into a JSON structure where the column name is used as a key for each record. This makes it much simpler to manipulate data in JS code as you don’t have to access records columns by index, and don’t care the order of the columns in returned datasource.
-Get data from a different datasource, with no specific filter:
-dataProvider.getDatasourceData('SAMPLE_DATA_NUMERIC_DS', null, function(data) {
-  container.querySelector('#extra-ds-1').textContent = data.data.length;
-  console.log('SAMPLE_DATA_NUMERIC_DS:');
-  console.log(DF.HtmlPlusUtils.utils.indexDataByColumnKey(data.data, data.columnsInfo));
-});
+Get data from a different datasource, with no specific filter:<br>
+dataProvider.getDatasourceData('SAMPLE_DATA_NUMERIC_DS', null, function(data) {<br>
+  container.querySelector('#extra-ds-1').textContent = data.data.length;<br>
+  console.log('SAMPLE_DATA_NUMERIC_DS:');<br>
+  console.log(DF.HtmlPlusUtils.utils.indexDataByColumnKey(data.data, data.columnsInfo));<br>
+});<br>
 Just pass the reference code of the datasource. The second parameter (null) is the filters, and null means “no filter”. Third parameter is call back method, because all calls that retrieve data from datasource are asynchronous. 
 The return data contains the data in “raw” format in data.data, and the columns information in data.columnsInfo. 
 For more example about how filters should be done, keep in mind that the filters of the current portlet preferences are passed to the JS code in the “filters” variable, so you just need to change portlet preferences to have some sample filters values.
