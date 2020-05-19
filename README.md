@@ -8,6 +8,9 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 
 
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/radial%20tree">Radial Tree</a>
+
+<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/radial%20tree/radialtree.PNG">
 
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/htmlplus.PNG">
