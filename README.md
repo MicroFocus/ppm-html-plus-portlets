@@ -2,6 +2,11 @@
 Public Github Repo hosting Micro Focus PPM Guide and Sample code for HTML+ portlets
 Portlets for use with Microfocus PPM.  The base code used to build these examples can be found https://observablehq.com/@d3/gallery.
 
+<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/collapsible%20tree/CollapsibleTree.PNG">
+
+<a href=https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/collapsible%20tree">Collapsible Tree</a>
+
+
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/htmlplus.PNG">
 
 etienne.canaud@microfocus.com
