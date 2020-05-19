@@ -74,7 +74,7 @@ dataProvider.getData(customFilter, function(data) {<br>
   console.log(DF.HtmlPlusUtils.utils.indexDataByColumnKey(data.data, data.columnsInfo));<br>
 });<br>
 	<br>
-Note the new built-in method DF.HtmlPlusUtils.utils.indexDataByColumnKey(data, columnsInfo)which will turn the data from the “raw” datasource format (Array of Array of String or numbers) into a JSON structure where the column name is used as a key for each record. This makes it much simpler to manipulate data in JS code as you don’t have to access records columns by index, and don’t care the order of the columns in returned datasource.
+Note the new built-in method DF.HtmlPlusUtils.utils.indexDataByColumnKey(data, columnsInfo)which will turn the data from the “raw” datasource format (Array of Array of String or numbers) into a JSON structure where the column name is used as a key for each record. This makes it much simpler to manipulate data in JS code as you don’t have to access records columns by index, and don’t care the order of the columns in returned datasource.<br>
 Get data from a different datasource, with no specific filter:<br>
 dataProvider.getDatasourceData('SAMPLE_DATA_NUMERIC_DS', null, function(data) {<br>
   container.querySelector('#extra-ds-1').textContent = data.data.length;<br>
