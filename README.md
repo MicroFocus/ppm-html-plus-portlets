@@ -16,10 +16,7 @@ Portlets for use with Microfocus PPM.  The base code used to build these example
 
 <img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/src/zoomable%20sunburst/zoomablesunburst.PNG">
 
-<img src="https://github.com/MicroFocus/ppm-html-plus-portlets/raw/master/htmlplus.PNG">
-
-etienne.canaud@microfocus.com
-christopher.hangl@microfocus.com
+Questions contact:etienne.canaud@microfocus.com;christopher.hangl@microfocus.com
 
 
 <b>Development mode vs. Production mode</b>
