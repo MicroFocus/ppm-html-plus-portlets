@@ -1,15 +1,7 @@
-$(function() {
-  var canvas = document.getElementById('canvas');
-  var ctx = canvas.getContext('2d');
-  var video = document.getElementById('video');
-
-  video.addEventListener('play', function() {
-    var $this = this; //cache
-    (function loop() {
-      if (!$this.paused && !$this.ended) {
-        ctx.drawImage($this, 0, 0);
-        setTimeout(loop, 1000 / 30); // drawing at 30fps
-      }
-    })();
-  }, 0);
-});
+<div id="theater">
+  <video id="video" src="PPM_URL_TO_VIDEO" controls="false"></video>
+  <canvas id="canvas"></canvas>
+  <label>
+    <br />Try to play me :)</label>
+  <br />
+</div>
