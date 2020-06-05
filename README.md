@@ -23,6 +23,11 @@ Portlets for use with Microfocus PPM.  Most of the base code used to build these
 <a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/wordcloud">Word Cloud</a>
 <img src="src/wordcloud/wordcloud.PNG">
 
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/tree/master/src/zoomable%20circle%20packing">Zoomable Circle Packing</a>
+<img src="src/zoomable%20circle%20packing/circlepacking.PNG">
+
+
+
 Questions contact:etienne.canaud@microfocus.com;christopher.hangl@microfocus.com
 
 
