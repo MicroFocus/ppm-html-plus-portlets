@@ -1,0 +1,3 @@
+SELECT name NAME, value VALUE
+ from (SELECT name NAME, count(*) VALUE  from (   select substr(name,             INSTR(name, ' ', -1, 1)+1) as name             from WP_TASK_INFO     union all    SELECT SUBSTR(name,           INSTR(name, ' ', 1, 1) + 1,           INSTR(name, ' ', 1, 2) - INSTR(name, ' ', 1, 1) - 1) as name   FROM WP_TASK_INFO    union all      SELECT SUBSTR(name,1,           INSTR(name, ' ',1 , 1)-1) as name    FROM WP_TASK_INFO    )     where name is not null and lower(name) not in ('1','2','3','4','5','6','7', 'a', 'the', 'as', '-', 'vi.', 'iii.', 'iv.', 'ii.', 'viii.', 'i.', 'v.', 'ix.', 'to''vii.', '[f]', '&', 'b', 'of', 'v:', 'iii:', 'u', 'ii:', 'n', 'c', 'i:', 'v2', 'p1', 'iv', 'vi')   group by name    order by value desc)
+ where rownum <=500

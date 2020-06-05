@@ -1,1 +1,0 @@
-<script src='/itg/web/knta/test/js/lib/d3.js'></script>

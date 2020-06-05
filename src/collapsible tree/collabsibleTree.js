@@ -131,7 +131,7 @@ root.x0 = dy / 2;
         .attr("viewBox", [-margin.left, left.x - margin.top, width, height])
         .tween("resize", window.ResizeObserver ? null : () => () => svg.dispatch("toggle"));
 
-    // Update the nodes…
+    // Update the nodesâ€¦
     const node = gNode.selectAll("g")
       .data(nodes, d => d.id);
 
@@ -172,7 +172,7 @@ root.x0 = dy / 2;
         .attr("fill-opacity", 0)
         .attr("stroke-opacity", 0);
 
-    // Update the links…
+    // Update the linksâ€¦
     const link = gLink.selectAll("path")
       .data(links, d => d.target.id);
 
