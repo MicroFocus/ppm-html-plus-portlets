@@ -1,1 +1,130 @@
-The general example data source for this portlet is  in ppm-html-plus-portlets/ds/datasource-H0-PortfolioHiearchy.txt
+SELECT
+    entity_id             entity_id,
+    name                  name,
+    parent_portfolio_id   parent_portfolio_id,
+    entity_type           entity_type,
+    parent_type           parent_type
+FROM
+    (
+        SELECT
+            portfolio_id          entity_id,
+            name,
+            parent_portfolio_id   parent_portfolio_id,
+            'PORTFOLIO' entity_type,
+            'PORTFOLIO' parent_type
+        FROM
+            pfm_portfolios
+        CONNECT BY
+            PRIOR portfolio_id = parent_portfolio_id
+        UNION
+        SELECT
+            request_id,
+            asset_name,
+            asset_portfolio_id,
+            'ASSET',
+            'PORTFOLIO' parent_type
+        FROM
+            kcrt_fg_pfm_asset
+        WHERE
+            asset_portfolio_id IS NOT NULL
+        UNION
+        SELECT
+            request_id,
+            proposal_name,
+            prop_portfolio_id,
+            'PROPOSAL',
+            'PORTFOLIO' parent_type
+        FROM
+            kcrt_fg_pfm_proposal
+        WHERE
+            prop_portfolio_id IS NOT NULL
+        UNION
+        SELECT
+            request_id,
+            project_name,
+            prj_portfolio_id,
+            'PROJECT',
+            'PORTFOLIO' parent_type
+        FROM
+            kcrt_fg_pfm_project
+        WHERE
+            prj_portfolio_id IS NOT NULL
+        UNION
+        --ROOT PROGAMS (i.e. ROLLUPABLE = 'N').   These cannot be added to Portfolios.
+        select 
+            pp.program_id       entity_id,
+            pp.container_name   name,
+            null    parent_portfolio_id,
+            'PROGRAM' entity_type,
+            '' parent_type 
+        from pgm_programs pp, FM_FINANCIAL_SUMMARY fs where pp.financial_summary_id = fs. financial_summary_id and pp.ROLLUPABLE = 'N'
+            
+        UNION
+        SELECT
+            pp.program_id       entity_id,
+            pp.container_name   name,
+            ppc.portfolio_id    parent_portfolio_id,
+            'PROGRAM' entity_type,
+            'PORTFOLIO' parent_type
+        FROM
+            pgm_programs             pp,
+            pfm_portfolio_contents   ppc
+        WHERE
+            pp.financial_summary_id = ppc.financial_summary_id
+        UNION
+        SELECT
+            CASE active_entity
+                WHEN 'Project'    THEN
+                    lpe.project_req_id
+                WHEN 'Asset'      THEN
+                    lpe.asset_req_id
+                WHEN 'Proposal'   THEN
+                    lpe.proposal_req_id
+            END entity_id,
+            CASE active_entity
+                WHEN 'Project'    THEN
+                    (
+                        SELECT
+                            project_name
+                        FROM
+                            kcrt_fg_pfm_project
+                        WHERE
+                            request_id = lpe.project_req_id
+                    )
+                WHEN 'Asset'      THEN
+                    (
+                        SELECT
+                            asset_name
+                        FROM
+                            kcrt_fg_pfm_asset
+                        WHERE
+                            request_id = lpe.asset_req_id
+                    )
+                WHEN 'Proposal'   THEN
+                    (
+                        SELECT
+                            proposal_name
+                        FROM
+                            kcrt_fg_pfm_proposal
+                        WHERE
+                            request_id = lpe.proposal_req_id
+                    )
+            END name,
+            pgc.program_id parent_portfolio_id,
+            CASE active_entity
+                WHEN 'Project'    THEN
+                    'PROJECT'
+                WHEN 'Asset'      THEN
+                    'ASSET'
+                WHEN 'Proposal'   THEN
+                    'PROPOSAL'
+            END entity_type,
+            'PROGRAM' parent_type
+        FROM
+            pgm_program_content           pgc,
+            pfm_lifecycle_parent_entity   lpe
+        WHERE
+            pgc.content_id = lpe.lifecycle_id
+    )
+WHERE
+    1 = 1

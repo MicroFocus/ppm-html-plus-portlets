@@ -1,49 +1,72 @@
+debugger;
+
 let width = 1500;
 let height = 1000;
 let radius = width / 2;
 
 let rootPortfolios = [];
 
+let rootPrograms = [];
+
 let allPortfolios = [];
 
+let allPrograms = [];
+
 let portfolios = {};
+
+let programs = {};
 
 let pfmEntities = [];
 
 debugger;
 
 data.forEach(function(d) {
-    var entityId = d[0];
+  var entityId = d[0];
   var name = d[1];
   var parentPortfolioId = d[2];
   var entityType = d[3];
+  var parentType = d[4];
+  
+  //Each record is reprented by the following fields
+  var node = {"name": name, "value": entityId, "parentPortfolioId" : parentPortfolioId, "children": [], "entityType": entityType, "parentType": parentType};
 
-  var node = {"name": name, "value": entityId, "parentPortfolioId" : parentPortfolioId, "children": []};
-
-  if ("PORTFOLIO" === entityType) {
+  //If the record is a portfolio
+  if ("PORTFOLIO" === entityType ) {
     portfolios['' + entityId] = node;
     allPortfolios.push(node);
-  node.isPortfolio = true;
+    node.isPortfolio = true;
 
     if (parentPortfolioId === null || parentPortfolioId === "" || parentPortfolioId === " " ) {
       rootPortfolios.push(node);
     }
 
-  } else {
- node.isPortfolio = false;
+  } 
+  //If the record is a Program
+  else if ("PROGRAM" === entityType)
+  {
+     programs['' + entityId] = node;
+     allPrograms.push(node);
+     node.isPortfolio = true;
+    //If the record is a stand-alone (root) Program
+     if (parentPortfolioId === null || parentPortfolioId === "" || parentPortfolioId === " " ) {
+        rootPrograms.push(node);
+    }
+  }
+  //If the record is not a Program or Portfolio.
+  else {
+    node.isPortfolio = false;
     pfmEntities.push(node);
   }
 });
 
-  
-  // Now filling entities in porfolios
+// Now filling entities in porfolios
 pfmEntities.forEach(function (pfmEntity) {
-  
-  //Only organize Portfolios identified.
-  if (typeof portfolios[''+pfmEntity['parentPortfolioId']] !== 'undefined') {
-  portfolios[''+pfmEntity['parentPortfolioId']].children.push(pfmEntity);
+  if ("PORTFOLIO" === pfmEntity.parentType) {
+  	portfolios[''+pfmEntity['parentPortfolioId']].children.push(pfmEntity);
   }
-  
+   if ("PROGRAM" === pfmEntity.parentType) {
+  	programs[''+pfmEntity['parentPortfolioId']].children.push(pfmEntity);
+  }
 });
 
 // Building portfolio Hierarchy
@@ -57,12 +80,27 @@ while (currentPortfolios.length > 0) {
 
     allPortfolios.forEach(function (pf) {
       if (pf.parentPortfolioId == pfmId) {
-        currentPf['children'].push(pf);
-        nextPortfolios.push(pf);
+          currentPf['children'].push(pf);
+          nextPortfolios.push(pf);
       }
     });
+    
+     allPrograms.forEach(function (pro) {
+      if (pro.parentPortfolioId == pfmId) {
+          currentPf['children'].push(pro);
+          nextPortfolios.push(pro);
+      }
+    });
+    
   });
   currentPortfolios = nextPortfolios;
+}
+
+if (rootPrograms.length > 0) {
+	rootPrograms.forEach(function (currentPro) {
+      rootPortfolios.push(currentPro);
+});
+
 }
 
 let graphData = {
