@@ -50,7 +50,6 @@ FROM
         WHERE
             prj_portfolio_id IS NOT NULL
         UNION
-        --ROOT PROGAMS (i.e. ROLLUPABLE = 'N').   These cannot be added to Portfolios.
         select 
             pp.program_id       entity_id,
             pp.container_name   name,
