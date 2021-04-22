@@ -31,6 +31,8 @@ Portlets for use with Microfocus PPM.  Most of the base code used to build these
 
 Questions contact:etienne.canaud@microfocus.com;christopher.hangl@microfocus.com
 
+<b> Gotchas </b>
+1. If you have an empty main data source, the js and html in your html+ portlet will not be entered (executed/rendered).  If you expect the main data source to be empty and you need to render something.  A "good practice"  is to create a dummy DS that returns "1" and always use it as the main datasource.  Then use a secondary data source in your code.
 
 <b>Development mode vs. Production mode</b>
 PPM starts by default in Production mode.  When the server is in PRODUCTION mode, HTML+ portlet definitions are in read-only, so you can only import portlet definitions using kMigratorImport.sh, not edit portlet definition.  If you develop HTML + Portlets you will need to do it in a development instance.  Please see the following instructions:
