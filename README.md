@@ -4,7 +4,7 @@ If you want to learn how to create your own HTML+ portlets, check our [Tutorial]
 
 You can look at what HTML+ portlets can do on the [Gallery](wiki/Gallery).
 
-<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/wiki/Gallery"><img src="/MicroFocus/ppm-html-plus-portlets/blob/master/img/htmlplus.PNG?raw=true" width=600/></a>
+<a href="https://github.com/MicroFocus/ppm-html-plus-portlets/wiki/Gallery"><img src="./blob/master/img/htmlplus.PNG?raw=true" width=600/></a>
 
 
 
