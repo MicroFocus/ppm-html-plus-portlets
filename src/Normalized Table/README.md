@@ -9,8 +9,8 @@ Calls 3 different web services  to obtain Project specific information(bac, cpi,
 •	/itg/rest2/projectEVM/<br>
 •	/itg/rest2/projectWP/category/<br><br>
 
-Never added things like(would be a good one):
-•	/itg/rest2/planValue/{projectId} [private] Gets Statistics Plan Value by month for a project.
+Never added things like(would be a good one):<br>
+•	/itg/rest2/planValue/{projectId} [private] Gets Statistics Plan Value by month for a project.<br>
 
 Normalizes the data to between 0 and 1 simply by using
 
