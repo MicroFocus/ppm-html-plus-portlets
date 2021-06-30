@@ -15,6 +15,7 @@ Normalizes the data to between 0 and 1 simply by using
  Then present them using d3-scale-chromatic  (Which is easy changed)
 
  
+<b> It should be noted not all the color coding was vetted.  There could be a few that need to be reversed.</b> 
 
 
 <img src="normalizedTable.PNG">
