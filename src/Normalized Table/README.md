@@ -1,6 +1,4 @@
-Please note in the js file
 
-<b> you must replace http://ppm:8080 in 4 places with your base_url.</b>
 
 Basically, it is using a data source to list the active projects and get some aggregate information (total_tasks, more to add).
 Calls 3 different web services  to obtain Project specific information(bac, cpi, ev, spi, npv, plannedcost, ect). <br><br>
