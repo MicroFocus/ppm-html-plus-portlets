@@ -1,0 +1,433 @@
+debugger;
+
+
+function NormalizeValues(val, min, max, inverse){
+    //(x - min(x)) / (max(x) - min(x))
+   if ((max - min) != 0)
+   {
+        var normalizedVall = (val - min)/(max - min);   
+        if (inverse == 1)
+        {
+	      return 1- normalizedVall;
+        }
+	else
+        {
+	      return normalizedVall;
+         }
+   }
+   else
+   {
+	   return 0.5;
+    }
+}
+function findElementMin(arr, propName) {
+  for (var i=0; i < arr.length; i++)
+    if (arr[i]["name"] == propName)
+      return arr[i]["min"];
+
+  // will return undefined if not found; you could return a default instead
+  return 0;
+}
+
+function findElementMax(arr, propName) {
+  for (var i=0; i < arr.length; i++)
+    if (arr[i]["name"] == propName)
+      return arr[i]["max"];
+
+  // will return undefined if not found; you could return a default instead
+  return 0;
+}
+
+function findElementInverse(arr, propName) {
+  for (var i=0; i < arr.length; i++)
+    if (arr[i]["name"] == propName)
+      return arr[i]["inverse"];
+  return 0;
+}
+
+function findBy(arr, key, comparatorFn) {
+  return arr.reduce(function(prev, curr, index, arr) { 
+    return comparatorFn.call(arr, prev[key], curr[key]) ? prev : curr; 
+  });
+}
+
+function minComp(prev, curr) {
+  return (prev < curr) && prev != 0;  //Lets ignore 0.
+}
+
+function maxComp(prev, curr) {
+  return prev > curr && prev != 0;
+}
+
+const color = d3
+    .scaleSequential(d3.interpolateRdYlGn)
+    .domain([0,1]);
+
+let width = 932;
+
+let allProjects = [];
+let mergedData = [];
+let allMinMax = [];
+let MinMax = [];
+
+
+
+function tabulate(table, data, columns) {
+
+     var num = 0, numCol = 0;
+     
+     const thead = table.append('thead')
+     const tbody = table.append('tbody');
+
+		// append the header row
+		thead.append('tr')
+                  .style('border', '1px solid white')  
+                  .style('border-collapse', 'collapse')  
+		  .selectAll('th')
+                  .style('border', '1px solid white')  
+                  .style('border-collapse', 'collapse')  
+		  .data(columns).enter()
+		  .append('th')
+                  .attr("class", "column criterion rotate-45")
+                  .style('text-align', 'center')
+                  
+                  .style('background-color', 
+                                function (column) {     
+                                     if(numCol % 2 == 0){ 
+                                           numCol = numCol + 1;
+                                           return "transparent";
+                                     }
+                                     else
+                                     {
+                                           numCol = numCol + 1;
+                                           return "transparent";
+                                     }
+                  })                 
+                  .append('div')
+                  .append('span')
+		    .text(function (column) { 
+                           if (column != "PROJECT_NAME") {
+                                 if (column == "TOTAL_TASKS")
+                                   return "Total Tasks";
+                                 if (column == "nominalReturn")
+                                   return "Nominal Return";
+                                 if (column == "projectedCost")
+                                   return "Projected Costs";
+                                 if (column == "totalActualBenefit")
+                                   return "Total Actual Benefit";
+                                 if (column == "npv")
+                                   return "Net Present Value (npv)";
+                                 if (column == "totalActualCost")
+                                   return "Total Actual Cost";
+                                 if (column == "totalBudget")
+                                   return "Total Budget";
+                                 if (column == "ac")
+                                   return "Actual Cost (ac)";
+                                 if (column == "bac")
+                                   return "Budget at Completion";
+                                 if (column =="cpi")
+                                   return "Cost Performance Index"
+                                 if (column == "cv")
+                                   return "Cost variance (cv)";
+                                 if (column == "eac")
+                                   return "Estimate at Completion (eac)";
+                                 if (column == "ev")
+                                   return "earned value (ev)";
+                                 if (column == "spi")
+                                   return "Schedule Performance Index (spi)";
+                                 if (column == "sv")
+                                   return "Schedule Variance (sv)";
+                                 if (column == "pv")
+                                   return "Planned Value (pv)";
+                                 if (column == "actualCost")
+                                   return "Actual Cost";
+                                 if (column == "plannedCost")
+                                   return "Planned Cost";
+                                 if (column == "baselineCost")
+                                   return "Baseline Cost";
+                                 else
+                                   return column; 
+                           }
+                           else
+                           {
+                                 return "";
+                           }
+                      })
+  .on("mouseenter", function(d) {
+      d3.select(this).style("stroke", "gray");
+      showTooltip(d);
+    })
+    .on("mouseleave", function() {
+      d3.select(this).style("stroke", null);
+      hideTooltip();
+    });
+
+		// create a row for each object in the data
+		var rows = tbody.selectAll('tr')
+		  .data(allProjects)
+		  .enter()
+		  .append('tr');
+
+		// create a cell in each row for each column
+		var cells = rows.selectAll('td')
+		  .data(function (row) {
+		    return columns.map(function (column) {
+                      if (row[column + "Str"] == undefined)
+                      {
+		            return {column: column, value: row[column], display: row[column]};
+                      }
+                      else
+                      {
+                           return {column: column, value: row[column], display: row[column+"Str"]};
+                      }
+		    });
+		  })
+		  .enter()
+                    .append('td')
+                    .style('text-align', 'center')
+                    .style('border', '1px solid white')  
+                    .style('border-collapse', 'collapse')  
+                    .style('background-color', 
+                                function (row) {       
+                                        
+                                        if (row.column == "PROJECT_NAME")
+                                        {
+                                             if(num % 2 == 0){ 
+                                                   num = num + 1;
+                                                   return "transparent";
+                                             }
+                                             else
+                                             {
+                                                   num = num + 1;
+                                                   return "gray";
+                                             }
+                                             
+                                        }
+                        
+                                         var min = findElementMin(allMinMax, row.column);
+                                         var max = findElementMax(allMinMax, row.column);
+                                         var inverse = findElementInverse(allMinMax, row.column);                                                                                                                                  
+                                         return color(NormalizeValues(row.value, min, max, inverse));
+                                       
+                                 })
+                    .style('text-align', 
+                                function (row) {       
+                                        if (row.column != "PROJECT_NAME")
+                                        {
+                                             return "center";
+                                        }
+                                 })
+		    .text(function (d) { 
+                             return d.display; 
+                     }) ;                  
+}
+
+
+
+
+async function postData(url = 'http://ppmdemo:8084/itg/rest2/pm/projectTypes') {
+  // Default options are marked with *
+  const response = await  fetch(url, {
+    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    data: '',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer' // no-referrer, *client
+    
+  });
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+
+async function processProjectData(data) {
+
+for (var i = 0, len = data.length; i < len; i++) {
+   
+var da = data[i];
+
+  var PROJECT_NAME = da[0];
+  var TOTAL_TASKS = da[1];
+  var PROJECT_CALCULATED_HEALTH = da[2];
+  var ISSUES_HEALTH = da[3];
+  var SCHEDULE_HEALTH = da[4];
+  var COST_HEALTH  = da[5];
+  var COST_VARIANCE_HEALTH  = da[6];
+  var PROJECT_ID = da[7];
+  
+await postData('http://ppm:8080/itg/rest2/projectFM/' + PROJECT_ID)
+  .then((RESTdata) => {
+    //console.log(RESTdata); // JSON data parsed by response.json() call
+    
+var node = {"PROJECT_NAME": PROJECT_NAME, "TOTAL_TASKS" : TOTAL_TASKS, "PROJECT_CALCULATED_HEALTH": PROJECT_CALCULATED_HEALTH, "ISSUES_HEALTH" : ISSUES_HEALTH, "SCHEDULE_HEALTH" : SCHEDULE_HEALTH, "COST_HEALTH" : COST_HEALTH, "COST_VARIANCE_HEALTH" : COST_VARIANCE_HEALTH, "PROJECT_ID" : PROJECT_ID};
+
+mergedData = merge_options(node,RESTdata);
+
+ })
+
+await postData('http://ppm:8080/itg/rest2/projectEVM/' + PROJECT_ID)
+  .then((RESTprojectEVMdata) => {
+mergedData = merge_options(mergedData,RESTprojectEVMdata);
+ })
+
+await postData('http://ppm:8080/itg/rest2/projectWP/category/' + PROJECT_ID)
+  .then((RESTprojectWPdata) => {
+allProjects.push(merge_options(mergedData,RESTprojectWPdata));
+ })
+
+
+
+
+}
+
+function addMinMaxnode(columnName)
+{
+       var temp = findBy(allProjects, columnName, minComp);
+      var changl =  temp.columnName;
+	  var MinMaxnode = {columnName: columnName, "min" : findBy(allProjects, columnName, minComp).columnName, "max": findBy(allProjects, columnName, maxComp).columnName};
+      allMinMax.push(MinMaxnode);
+}
+//TOTAL_TASKS
+//addMinMaxnode('TOTAL_TASKS');
+var MinMaxnode = {"name": 'TOTAL_TASKS', "toolText" : "hello world", "min" : findBy(allProjects, 'TOTAL_TASKS', minComp).TOTAL_TASKS, "max": findBy(allProjects, 'TOTAL_TASKS', maxComp).TOTAL_TASKS, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+//nominalReturn
+var MinMaxnode = {"name": 'nominalReturn', "toolText" : "hello world", "min" : findBy(allProjects, 'nominalReturn', minComp).nominalReturn, "max": findBy(allProjects, 'nominalReturn', maxComp).nominalReturn, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+//npv
+MinMaxnode = {"name": 'npv', "toolText" : "hello world", "min" : findBy(allProjects, 'npv', minComp).npv, "max": findBy(allProjects, 'npv', maxComp).npv, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//projectedCost
+MinMaxnode = {"name": 'projectedCost', "toolText" : "hello world", "min" : findBy(allProjects, 'projectedCost', minComp).projectedCost, "max": findBy(allProjects, 'projectedCost', maxComp).projectedCost, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//totalActualBenefit
+MinMaxnode = {"name": 'totalActualBenefit', "toolText" : "hello world", "min" : findBy(allProjects, 'totalActualBenefit', minComp).totalActualBenefit, "max": findBy(allProjects, 'totalActualBenefit', maxComp).totalActualBenefit, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//totalActualCost
+MinMaxnode = {"name": 'totalActualCost', "toolText" : "hello world", "min" : findBy(allProjects, 'totalActualCost', minComp).totalActualCost, "max": findBy(allProjects, 'totalActualCost', maxComp).totalActualCost, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//totalBudget
+MinMaxnode = {"name": 'totalBudget', "toolText" : "hello world", "min" : findBy(allProjects, 'totalBudget', minComp).totalBudget, "max": findBy(allProjects, 'totalBudget', maxComp).totalBudget, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//ac
+MinMaxnode = {"name": 'ac', "toolText" : "hello world", "min" : findBy(allProjects, 'ac', minComp).ac, "max": findBy(allProjects, 'ac', maxComp).ac, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//bac
+MinMaxnode = {"name": 'bac', "toolText" : "hello world", "min" : findBy(allProjects, 'bac', minComp).bac, "max": findBy(allProjects, 'bac', maxComp).bac, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//cpi
+MinMaxnode = {"name": 'cpi', "toolText" : "hello world", "min" : findBy(allProjects, 'cpi', minComp).cpi, "max": findBy(allProjects, 'cpi', maxComp).cpi, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//cv
+MinMaxnode = {"name": 'cv', "toolText" : "hello world", "min" : findBy(allProjects, 'cv', minComp).cv, "max": findBy(allProjects, 'cv', maxComp).cv, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//eac
+MinMaxnode = {"name": 'eac', "toolText" : "hello world", "min" : findBy(allProjects, 'eac', minComp).eac, "max": findBy(allProjects, 'eac', maxComp).eac, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//ev
+MinMaxnode = {"name": 'ev', "toolText" : "hello world", "min" : findBy(allProjects, 'ev', minComp).ev, "max": findBy(allProjects, 'ev', maxComp).ev, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//spi
+MinMaxnode = {"name": 'spi', "toolText" : "hello world", "min" : findBy(allProjects, 'spi', minComp).spi, "max": findBy(allProjects, 'spi', maxComp).spi, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//sv
+MinMaxnode = {"name": 'sv', "toolText" : "hello world", "min" : findBy(allProjects, 'sv', minComp).sv, "max": findBy(allProjects, 'sv', maxComp).sv, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//pv
+MinMaxnode = {"name": 'pv', "toolText" : "hello world", "min" : findBy(allProjects, 'pv', minComp).pv, "max": findBy(allProjects, 'pv', maxComp).pv, "inverse" : 1};
+allMinMax.push(MinMaxnode);
+
+//actualCost
+MinMaxnode = {"name": 'actualCost', "toolText" : "hello world", "min" : findBy(allProjects, 'actualCost', minComp).actualCost, "max": findBy(allProjects, 'actualCost', maxComp).actualCost, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//plannedCost
+MinMaxnode = {"name": 'plannedCost', "toolText" : "hello world", "min" : findBy(allProjects, 'plannedCost', minComp).plannedCost, "max": findBy(allProjects, 'plannedCost', maxComp).plannedCost, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+//baselineCost
+MinMaxnode = {"name": 'baselineCost', "toolText" : "hello world", "min" : findBy(allProjects, 'baselineCost', minComp).baselineCost, "max": findBy(allProjects, 'baselineCost', maxComp).baselineCost, "inverse" : 0};
+allMinMax.push(MinMaxnode);
+
+tabulate( d3.select(container).append('div').attr('class', 'scrollable-table').append('table').attr("class","table table-striped table-header-rotated"), data,  [
+'PROJECT_NAME', 
+'TOTAL_TASKS', 
+//'PROJECT_CALCULATED_HEALTH', 
+//'ISSUES_HEALTH', 'SCHEDULE_HEALTH', 
+//'COST_HEALTH', 
+//'COST_VARIANCE_HEALTH', 
+//'PROJECT_ID', 
+'nominalReturn',
+//'nominalReturnStr',
+'npv',
+//'npvStr',
+'projectedCost',
+//'projectedCostStr',
+'totalActualBenefit',
+//'totalActualBenefitStr',
+'totalActualCost',
+//'totalActualCostStr',
+'totalBudget',
+//'totalBudgetStr',
+'ac',
+//'acStr',
+'bac',
+//'bacStr',
+'cpi',
+//'cpiStr',
+'cv',
+//'cvStr',
+'eac',
+//'eacStr',
+'ev',
+//'evStr',
+//'formula',
+'spi',
+//'spiStr',
+'sv',
+//'svStr',
+'pv',
+//'pvStr',
+'actualCost',
+//'actualCostStr',
+'plannedCost',
+//'plannedCostStr',
+'baselineCost'
+//'baselineCostStr',
+]); 
+}
+
+
+
+
+ function showTooltip(d) {
+    const state1 = "abc",
+      state2 = "abc";
+    const commonTerms ="abc";
+    //const [x, y] = d3.mouse(div.node());
+   // tooltip.html(`{d.toolText.toFixed(2)}`)
+    tooltip.innerHTML = "abc";
+      
+    //  tooltip.style("top", y + "px")
+    //  .style("left", x + 15 + "px");
+    //tooltip.style("display", null);
+  }
+
+  processProjectData(data);

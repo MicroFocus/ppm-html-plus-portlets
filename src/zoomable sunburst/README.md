@@ -1,5 +1,6 @@
 This example was adapted from Mike Bostock https://observablehq.com/@d3/zoomable-sunburst
 
+Each entity is code with the same color
 Use the datasource in this folder placed in this folder.
 This is a clickable visualization.  Click in the middle circle, to move back in the hierarchy.
 You can constrain the existing data source by coding in the PORTFOLIO_ID:
