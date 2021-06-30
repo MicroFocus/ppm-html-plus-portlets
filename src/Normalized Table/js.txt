@@ -225,7 +225,7 @@ function tabulate(table, data, columns) {
 
 
 
-async function postData(url = 'http://ppmdemo:8084/itg/rest2/pm/projectTypes') {
+async function postData(url = '/itg/rest2/pm/projectTypes') {
   // Default options are marked with *
   const response = await  fetch(url, {
     method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -259,7 +259,7 @@ var da = data[i];
   var COST_VARIANCE_HEALTH  = da[6];
   var PROJECT_ID = da[7];
   
-await postData('http://ppm:8080/itg/rest2/projectFM/' + PROJECT_ID)
+await postData('/itg/rest2/projectFM/' + PROJECT_ID)
   .then((RESTdata) => {
     //console.log(RESTdata); // JSON data parsed by response.json() call
     
@@ -269,12 +269,12 @@ mergedData = merge_options(node,RESTdata);
 
  })
 
-await postData('http://ppm:8080/itg/rest2/projectEVM/' + PROJECT_ID)
+await postData('/itg/rest2/projectEVM/' + PROJECT_ID)
   .then((RESTprojectEVMdata) => {
 mergedData = merge_options(mergedData,RESTprojectEVMdata);
  })
 
-await postData('http://ppm:8080/itg/rest2/projectWP/category/' + PROJECT_ID)
+await postData('/itg/rest2/projectWP/category/' + PROJECT_ID)
   .then((RESTprojectWPdata) => {
 allProjects.push(merge_options(mergedData,RESTprojectWPdata));
  })
